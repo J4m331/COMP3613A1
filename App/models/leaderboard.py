@@ -1,5 +1,5 @@
-from App.database import db
+#from App.database import db
 
-class Leaderboard(db.Model):
+#class Leaderboard(db.Model):
     
-    students = db.relationship('Student', backref='leaderboard', lazy=True)
+    #students = db.relationship('Student', backref='leaderboard', lazy=True)

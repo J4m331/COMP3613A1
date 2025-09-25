@@ -1,4 +1,4 @@
-from App.models import Leaderboard
+#from App.models import Leaderboard
 from App.database import db
 
 def display_leaderboard():
