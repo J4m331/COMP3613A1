@@ -7,8 +7,8 @@ class Student(User):
     total_hours = db.Column(db.Integer, nullable = False)
     accolades = db.relationship('Accolade', backref='student', lazy = True)
     
-    def __init__(self, username, password):
-        super().__init__(username, password)
+    def __init__(self, username, password, firstname, lastname):
+        super().__init__(username, password, firstname, lastname)
         self.total_hours = 0
         
     def get_json(self):

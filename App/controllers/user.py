@@ -1,8 +1,8 @@
 from App.models import User
 from App.database import db
 
-def create_user(username, password):
-    newuser = User(username=username, password=password)
+def create_user(username, password, firstname, lastname):
+    newuser = User(username=username, password=password, firstname=firstname, lastname=lastname)
     db.session.add(newuser)
     db.session.commit()
     return newuser

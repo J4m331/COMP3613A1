@@ -5,10 +5,14 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
+    firstname = db.Column(db.String(32), nullable=False)
+    lastname = db.Column(db.String(32), nullable=False)
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, firstname, lastname):
         self.username = username
         self.set_password(password)
+        self.firstname = firstname
+        self.lastname = lastname
 
     def get_json(self):
         return{
