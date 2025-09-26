@@ -19,8 +19,8 @@ def update_staff(id, username):
     return None
 
 def list_requests():
-    requests = Request.query.all()
-    return [request.get_json() for request in requests]
+    requests = db.session.scalars(db.select(Request)).all()
+    return requests
 
 def get_request(request_id):
     return db.session.get(Request, request_id)
@@ -32,12 +32,17 @@ def approve_request(request_id):
     request = get_request(request_id)
     student = get_student(request.student_id)
     student.total_hours += request.hours
-    db.session.remove(request)
+    db.session.delete(request)
     db.session.commit()
     return True
 
 def deny_request(request_id):
     request = get_request(request_id)
-    db.session.remove(request)
+    db.session.delete(request)
     db.session.commit()
+    return True
+
+def log_hours(student_id, hours):
+    student = get_student(student_id)
+    student.total_hours += hours
     return True

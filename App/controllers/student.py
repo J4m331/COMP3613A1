@@ -13,11 +13,11 @@ def get_student(id):
 def get_all_students():
     return db.session.scalars(db.select(Student)).all()
 
-def get_all_users_json():
+def get_all_students_json():
     students = get_all_students()
     if not students:
         return []
-    students = [students.get_json() for student in students]
+    students = [student.get_json() for student in students]
     return students
 
 def update_student(id, username):
@@ -53,9 +53,27 @@ def add_accolade(id):
                 )
                 db.session.add(accolade)
                 db.session.commit()
+                add_accolade(id)
                 return accolade
             
         if hours >= 50:
+            existing_accolade = Accolade.query.filter_by(
+                title="Gold worker", 
+                student_id=id
+            ).first()
+            
+            if not existing_accolade:
+                accolade = Accolade(
+                    student_id=id,
+                    title="Gold worker",
+                    description="Awarded for 50 hours of community service",
+                )
+                db.session.add(accolade)
+                db.session.commit()
+                add_accolade(id)
+                return accolade
+        
+        if hours >= 20:
             existing_accolade = Accolade.query.filter_by(
                 title="Silver worker", 
                 student_id=id
@@ -65,13 +83,14 @@ def add_accolade(id):
                 accolade = Accolade(
                     student_id=id,
                     title="Silver worker",
-                    description="Awarded for 50 hours of community service",
+                    description="Awarded for 20 hours of community service",
                 )
                 db.session.add(accolade)
                 db.session.commit()
+                add_accolade(id)
                 return accolade
             
-        if hours >= 20:
+        if hours >= 10:
             existing_accolade = Accolade.query.filter_by(
                 title="Bronze volunteer", 
                 student_id=id
@@ -81,13 +100,14 @@ def add_accolade(id):
                 accolade = Accolade(
                     student_id=id,
                     title="Bronze volunteer",
-                    description="Awarded for 20 hours of community service",
+                    description="Awarded for 10 hours of community service",
                 )
                 db.session.add(accolade)
                 db.session.commit()
+                add_accolade(id)
                 return accolade
             
-        if hours >= 10:
+        if hours >= 5:
             existing_accolade = Accolade.query.filter_by(
                 title="Novice volunteer", 
                 student_id=id
@@ -97,10 +117,11 @@ def add_accolade(id):
                 accolade = Accolade(
                     student_id=id,
                     title="Novice volunteer",
-                    description="Awarded for 10 hours of community service",
+                    description="Awarded for 5 hours of community service",
                 )
                 db.session.add(accolade)
                 db.session.commit()
+                add_accolade(id)
                 return accolade
     return None
 

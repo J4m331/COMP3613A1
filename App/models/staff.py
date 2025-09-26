@@ -13,8 +13,8 @@ class Staff(User):
         
     def get_json(self):
         return{
-            'id': super.id,
-            'username': super.username,
-            'firstname': super.firstname,
-            'lastname': super.lastname
+            'id': self.id,
+            'username': self.username,
+            'firstname': self.firstname,
+            'lastname': self.lastname
         }
